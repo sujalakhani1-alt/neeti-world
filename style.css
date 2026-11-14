@@ -6,11 +6,13 @@
 }
 
 body {
-  min-height: 100vh;
-  font-family: Georgia, serif;
-  color: white;
-  background: linear-gradient(160deg, #090b20, #24132f, #48213f);
-  overflow-x: hidden;
+    min-height: 100vh;
+    font-family: Georgia, serif;
+    color: white;
+    background:
+        linear-gradient(rgba(9, 11, 32, 0.55), rgba(36, 19, 47, 0.65)),
+        url("neetibg.jpg") center center / cover no-repeat fixed;
+    overflow-x: hidden;
 }
 
 .container {
