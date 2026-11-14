@@ -29,57 +29,121 @@ function tapStar() {
     "Close your eyes, make a little wish and hu aai jais tya and remember... " +
     "somewhere under this same sky, someone is wishing you happiness too. ✨❤️";
 }
+
+/* Countdown */
+
 let countdownTimer = null;
+let selectedDate = null;
+
+const meetingDates = [
+  ["January 11, 2027", "2027-01-11T00:00:00"],
+  ["January 12, 2027", "2027-01-12T00:00:00"],
+  ["January 13, 2027", "2027-01-13T00:00:00"]
+];
 
 function showCountdown() {
-    const box = document.getElementById("countdown");
+  const box = document.getElementById("countdown");
 
-    box.hidden = false;
+  box.hidden = false;
 
-    function updateCountdown() {
-        const dates = [
-            ["January 11, 2027", "2027-01-11T00:00:00"],
-            ["January 12, 2027", "2027-01-12T00:00:00"],
-            ["January 13, 2027", "2027-01-13T00:00:00"]
-        ];
+  if (countdownTimer !== null) {
+    clearInterval(countdownTimer);
+  }
 
-        let html = "<h2>Kyareeeeee Malissssss Goguuuuuu? 🥹❤️</h2>";
-        html += "<p>Three possible dates, one beautiful moment 💗</p>";
+  updateCountdown();
 
-        dates.forEach(([label, date]) => {
-            const difference = new Date(date).getTime() - Date.now();
+  countdownTimer = setInterval(updateCountdown, 1000);
+}
 
-            if (difference <= 0) {
-                html += `<div class="countdown-card">
-                    <h3>${label}</h3>
-                    <p>It's finally time! ❤️</p>
-                </div>`;
-                return;
-            }
+function updateCountdown() {
+  const box = document.getElementById("countdown");
 
-            const days = Math.floor(difference / 86400000);
-            const hours = Math.floor((difference / 3600000) % 24);
-            const minutes = Math.floor((difference / 60000) % 60);
-            const seconds = Math.floor((difference / 1000) % 60);
+  let html = `
+    <h2>Kyareeeeee Malissssss Goguuuuuu? 🥹❤️</h2>
+    <p>Three possible dates, one beautiful moment 💗</p>
+    <div class="date-options">
+  `;
 
-            html += `
-                <div class="countdown-card">
-                    <h3>💕 ${label}</h3>
-                    <div class="timer">
-                        ${days}d : ${hours}h : ${minutes}m : ${seconds}s
-                    </div>
-                </div>
-            `;
-        });
+  meetingDates.forEach(([label, date], index) => {
+    const difference = new Date(date).getTime() - Date.now();
 
-        box.innerHTML = html;
-    }
+    const days = Math.max(0, Math.floor(difference / 86400000));
+    const hours = Math.max(0, Math.floor((difference / 3600000) % 24));
+    const minutes = Math.max(0, Math.floor((difference / 60000) % 60));
+    const seconds = Math.max(0, Math.floor((difference / 1000) % 60));
 
-    updateCountdown();
+    const isSelected = selectedDate === index;
 
-    if (countdownTimer !== null) {
-        clearInterval(countdownTimer);
-    }
+    html += `
+      <button
+        class="date-choice ${isSelected ? "selected-date" : ""}"
+        onclick="chooseDate(${index})"
+      >
+        💕 ${label}
 
-    countdownTimer = setInterval(updateCountdown, 1000);
+        <span class="date-timer">
+          ${difference <= 0
+            ? "It's finally time! ❤️"
+            : `${days}d : ${hours}h : ${minutes}m : ${seconds}s`}
+        </span>
+
+        ${isSelected ? "<span>✨ Selected! ✨</span>" : ""}
+      </button>
+    `;
+  });
+
+  html += "</div>";
+
+  box.innerHTML = html;
+}
+
+function chooseDate(index) {
+  selectedDate = index;
+
+  launchSparkles();
+  updateCountdown();
+}
+
+/* Magical sparkle celebration */
+
+function launchSparkles() {
+  const oldLayer = document.querySelector(".sparkle-layer");
+
+  if (oldLayer) {
+    oldLayer.remove();
+  }
+
+  const layer = document.createElement("div");
+  layer.className = "sparkle-layer";
+
+  document.body.appendChild(layer);
+
+  const particles = ["✨", "💗", "⭐", "💖", "🌸"];
+
+  for (let i = 0; i < 150; i++) {
+    const sparkle = document.createElement("span");
+
+    sparkle.className = "sparkle-particle";
+
+    sparkle.textContent =
+      particles[Math.floor(Math.random() * particles.length)];
+
+    sparkle.style.left = Math.random() * 100 + "vw";
+    sparkle.style.top = Math.random() * 100 + "vh";
+
+    sparkle.style.fontSize =
+      (12 + Math.random() * 22) + "px";
+
+    sparkle.style.animationDelay =
+      Math.random() * 0.8 + "s";
+
+    sparkle.style.animationDuration =
+      (2 + Math.random() * 2) + "s";
+
+    layer.appendChild(sparkle);
+  }
+
+  setTimeout(() => {
+    layer.remove();
+  }, 5000);
 }
