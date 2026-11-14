@@ -29,4 +29,57 @@ function tapStar() {
     "Close your eyes, make a little wish and hu aai jais tya and remember... " +
     "somewhere under this same sky, someone is wishing you happiness too. ✨❤️";
 }
+let countdownTimer = null;
 
+function showCountdown() {
+    const box = document.getElementById("countdown");
+
+    box.hidden = false;
+
+    function updateCountdown() {
+        const dates = [
+            ["January 11, 2027", "2027-01-11T00:00:00"],
+            ["January 12, 2027", "2027-01-12T00:00:00"],
+            ["January 13, 2027", "2027-01-13T00:00:00"]
+        ];
+
+        let html = "<h2>Until I See You Again 🥹❤️</h2>";
+        html += "<p>Three possible dates, one beautiful moment 💗</p>";
+
+        dates.forEach(([label, date]) => {
+            const difference = new Date(date).getTime() - Date.now();
+
+            if (difference <= 0) {
+                html += `<div class="countdown-card">
+                    <h3>${label}</h3>
+                    <p>It's finally time! ❤️</p>
+                </div>`;
+                return;
+            }
+
+            const days = Math.floor(difference / 86400000);
+            const hours = Math.floor((difference / 3600000) % 24);
+            const minutes = Math.floor((difference / 60000) % 60);
+            const seconds = Math.floor((difference / 1000) % 60);
+
+            html += `
+                <div class="countdown-card">
+                    <h3>💕 ${label}</h3>
+                    <div class="timer">
+                        ${days}d : ${hours}h : ${minutes}m : ${seconds}s
+                    </div>
+                </div>
+            `;
+        });
+
+        box.innerHTML = html;
+    }
+
+    updateCountdown();
+
+    if (countdownTimer !== null) {
+        clearInterval(countdownTimer);
+    }
+
+    countdownTimer = setInterval(updateCountdown, 1000);
+}
