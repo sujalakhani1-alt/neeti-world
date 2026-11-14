@@ -239,6 +239,9 @@ function launchSparkles() {
   }, 5000);
 }
 function toggleSong() {
+  // Hide the countdown and show the message section
+  hideCountdown();
+
   const song = document.getElementById("dedicatedSong");
 
   if (song.paused) {
@@ -248,4 +251,9 @@ function toggleSong() {
   } else {
     song.pause();
   }
+
+  // Show a cute message
+  document.getElementById("message").textContent =
+    "This one's for you, Goguuuu! 🎶❤️";
+}
 }
