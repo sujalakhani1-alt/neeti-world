@@ -132,3 +132,60 @@ button:hover {
   50% { transform: scale(1.15); }
 }
 
+/* Full-screen centered photo */
+body {
+    background: #090b20;
+    min-height: 100vh;
+    position: relative;
+    isolation: isolate;
+}
+
+/* Remove old background layers */
+body::before,
+body::after {
+    content: none;
+}
+
+/* Photo frame */
+.container {
+    width: min(100%, 520px);
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 25px 20px;
+
+    background:
+        linear-gradient(
+            rgba(10, 5, 20, 0.50),
+            rgba(10, 5, 20, 0.60)
+        ),
+        url("neetibg.jpg");
+
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Buttons stay inside photo */
+.buttons {
+    width: 100%;
+    max-width: 420px;
+}
+
+button {
+    width: 100%;
+    background: rgba(20, 10, 30, 0.35);
+    backdrop-filter: blur(4px);
+}
+
+/* Keep the message inside too */
+.message {
+    width: 100%;
+    max-width: 420px;
+}
+
