@@ -10,8 +10,9 @@ body {
     font-family: Georgia, serif;
     color: white;
     background:
-        linear-gradient(rgba(9, 11, 32, 0.55), rgba(36, 19, 47, 0.65)),
-        url("neetibg.jpg") center center / 80% auto no-repeat fixed;
+        linear-gradient(rgba(9, 11, 32, 0.35), rgba(36, 19, 47, 0.45)),
+        url("neetibg.jpg") center center / contain no-repeat fixed;
+    background-color: #090b20;
     overflow-x: hidden;
 }
 
