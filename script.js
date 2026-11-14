@@ -7,7 +7,7 @@ let countdownTimer = null;
 let selectedDate = null;
 let sparkleTimeout = null;
 
-/* Hide countdown when another button is clicked */
+/* HIDE OTHER SURPRISES */
 
 function hideCountdown() {
   const box = document.getElementById("countdown");
@@ -21,12 +21,10 @@ function hideCountdown() {
     countdownTimer = null;
   }
 
-  // Remove any remaining sparkles
-  const sparkleLayer = document.querySelector(".sparkle-layer");
+  const sparkleLayer =
+    document.querySelector(".sparkle-layer");
 
-  if (sparkleLayer) {
-    sparkleLayer.remove();
-  }
+  if (sparkleLayer) sparkleLayer.remove();
 
   if (sparkleTimeout !== null) {
     clearTimeout(sparkleTimeout);
@@ -34,10 +32,21 @@ function hideCountdown() {
   }
 }
 
-/* 💌 OPEN MY LETTER */
+function hideSongPlayer() {
+  document.getElementById("songPlayer").hidden = true;
+
+  const song = document.getElementById("dedicatedSong");
+  song.pause();
+
+  document.getElementById("songStatus").textContent =
+    "Tap Play to listen 💕";
+}
+
+/* LOVE LETTER */
 
 function openLetter() {
   hideCountdown();
+  hideSongPlayer();
 
   document.getElementById("message").innerHTML =
     "Dear Neetiii, 💌<br><br>" +
@@ -47,10 +56,11 @@ function openLetter() {
     "Yours, from a little distance away. 🌙";
 }
 
-/* ❤️ DISCOVER A REASON */
+/* DISCOVER A REASON */
 
 function discoverReason() {
   hideCountdown();
+  hideSongPlayer();
 
   const reasons = [
     "Tari little smile makes my day. ❤️",
@@ -67,19 +77,18 @@ function discoverReason() {
     reasons[random];
 }
 
-/* ✨ MAKE A WISH */
+/* MAKE A WISH */
 
 function tapStar() {
   hideCountdown();
+  hideSongPlayer();
 
   document.getElementById("message").textContent =
     "Close your eyes, make a little wish and hu aai jais tya and remember... " +
     "somewhere under this same sky, someone is wishing you happiness too. ✨❤️";
 }
 
-/* =====================================
-   ⏳ DAYS TO SEE YOU
-   ===================================== */
+/* COUNTDOWN DATES */
 
 const meetingDates = [
   ["January 11, 2027", "2027-01-11T00:00:00"],
@@ -88,25 +97,19 @@ const meetingDates = [
 ];
 
 function showCountdown() {
+  hideCountdown();
+  hideSongPlayer();
+
   const box = document.getElementById("countdown");
   const message = document.getElementById("message");
 
-  // Hide previous message
   message.style.display = "none";
-
-  // Show countdown
   box.hidden = false;
-
-  if (countdownTimer !== null) {
-    clearInterval(countdownTimer);
-  }
 
   updateCountdown();
 
   countdownTimer = setInterval(updateCountdown, 1000);
 }
-
-/* Update all three countdowns */
 
 function updateCountdown() {
   const box = document.getElementById("countdown");
@@ -114,31 +117,27 @@ function updateCountdown() {
   let html = `
     <h2>Kyareeeeee Malissssss Goguuuuuu? 🥹❤️</h2>
     <p>Three possible dates, one beautiful moment 💗</p>
-
     <div class="date-options">
   `;
 
   meetingDates.forEach(([label, date], index) => {
-    const difference = new Date(date).getTime() - Date.now();
+    const difference =
+      new Date(date).getTime() - Date.now();
 
     const days = Math.max(
-      0,
-      Math.floor(difference / 86400000)
+      0, Math.floor(difference / 86400000)
     );
 
     const hours = Math.max(
-      0,
-      Math.floor((difference / 3600000) % 24)
+      0, Math.floor((difference / 3600000) % 24)
     );
 
     const minutes = Math.max(
-      0,
-      Math.floor((difference / 60000) % 60)
+      0, Math.floor((difference / 60000) % 60)
     );
 
     const seconds = Math.max(
-      0,
-      Math.floor((difference / 1000) % 60)
+      0, Math.floor((difference / 1000) % 60)
     );
 
     const isSelected = selectedDate === index;
@@ -158,21 +157,14 @@ function updateCountdown() {
           }
         </span>
 
-        ${
-          isSelected
-            ? "<span>✨ Selected! ✨</span>"
-            : ""
-        }
+        ${isSelected ? "<span>✨ Selected! ✨</span>" : ""}
       </button>
     `;
   });
 
   html += "</div>";
-
   box.innerHTML = html;
 }
-
-/* 💗 SELECT ANY DATE */
 
 function chooseDate(index) {
   selectedDate = index;
@@ -181,16 +173,13 @@ function chooseDate(index) {
   updateCountdown();
 }
 
-/* =====================================
-   ✨ FULL-SCREEN SPARKLES
-   ===================================== */
+/* SPARKLES */
 
 function launchSparkles() {
-  const oldLayer = document.querySelector(".sparkle-layer");
+  const oldLayer =
+    document.querySelector(".sparkle-layer");
 
-  if (oldLayer) {
-    oldLayer.remove();
-  }
+  if (oldLayer) oldLayer.remove();
 
   if (sparkleTimeout !== null) {
     clearTimeout(sparkleTimeout);
@@ -201,9 +190,7 @@ function launchSparkles() {
 
   document.body.appendChild(layer);
 
-  const particles = [
-    "✨", "💗", "⭐", "💖", "🌸"
-  ];
+  const particles = ["✨", "💗", "⭐", "💖", "🌸"];
 
   for (let i = 0; i < 150; i++) {
     const sparkle = document.createElement("span");
@@ -211,9 +198,7 @@ function launchSparkles() {
     sparkle.className = "sparkle-particle";
 
     sparkle.textContent =
-      particles[
-        Math.floor(Math.random() * particles.length)
-      ];
+      particles[Math.floor(Math.random() * particles.length)];
 
     sparkle.style.left =
       Math.random() * 100 + "vw";
@@ -238,22 +223,47 @@ function launchSparkles() {
     sparkleTimeout = null;
   }, 5000);
 }
-function toggleSong() {
-  // Hide the countdown and show the message section
+
+/* SONG DEDICATED TO YOU */
+
+function showSongPlayer() {
   hideCountdown();
 
+  const message = document.getElementById("message");
+  const player = document.getElementById("songPlayer");
+
+  message.style.display = "none";
+  player.hidden = false;
+}
+
+function playSong() {
+  const song = document.getElementById("dedicatedSong");
+  const status = document.getElementById("songStatus");
+
+  song.play()
+    .then(() => {
+      status.textContent =
+        "Playing just for you, Goguuuu 🎶❤️";
+    })
+    .catch(() => {
+      status.textContent =
+        "Couldn't play the song 🥺";
+    });
+}
+
+function pauseSong() {
   const song = document.getElementById("dedicatedSong");
 
-  if (song.paused) {
-    song.play().catch(() => {
-      alert("Couldn't play the song. Please try again.");
-    });
-  } else {
-    song.pause();
-  }
+  song.pause();
 
-  // Show a cute message
-  document.getElementById("message").textContent =
-    "This one's for you, Goguuuu! 🎶❤️";
+  document.getElementById("songStatus").textContent =
+    "Paused 💗 Tap Play to continue";
 }
-}
+
+/* RESET STATUS WHEN SONG ENDS */
+
+document.getElementById("dedicatedSong")
+  .addEventListener("ended", () => {
+    document.getElementById("songStatus").textContent =
+      "Our little melody has finished 💕";
+  });
