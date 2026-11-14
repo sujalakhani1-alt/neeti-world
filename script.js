@@ -1,13 +1,44 @@
+
+/* =====================================
+   NEETIII'S LITTLE WORLD ❤️
+   ===================================== */
+
+let countdownTimer = null;
+let selectedDate = null;
+let sparkleTimeout = null;
+
+/* Hide countdown when another button is clicked */
+
 function hideCountdown() {
   const box = document.getElementById("countdown");
+  const message = document.getElementById("message");
+
   box.hidden = true;
+  message.style.display = "block";
 
   if (countdownTimer !== null) {
     clearInterval(countdownTimer);
     countdownTimer = null;
   }
+
+  // Remove any remaining sparkles
+  const sparkleLayer = document.querySelector(".sparkle-layer");
+
+  if (sparkleLayer) {
+    sparkleLayer.remove();
+  }
+
+  if (sparkleTimeout !== null) {
+    clearTimeout(sparkleTimeout);
+    sparkleTimeout = null;
+  }
 }
+
+/* 💌 OPEN MY LETTER */
+
 function openLetter() {
+  hideCountdown();
+
   document.getElementById("message").innerHTML =
     "Dear Neetiii, 💌<br><br>" +
     "I don't know how to explain it, but somehow you make even the simplest moments feel special. " +
@@ -16,7 +47,11 @@ function openLetter() {
     "Yours, from a little distance away. 🌙";
 }
 
+/* ❤️ DISCOVER A REASON */
+
 function discoverReason() {
+  hideCountdown();
+
   const reasons = [
     "Tari little smile makes my day. ❤️",
     "You make ordinary moments feel special. 🌷",
@@ -32,16 +67,19 @@ function discoverReason() {
     reasons[random];
 }
 
+/* ✨ MAKE A WISH */
+
 function tapStar() {
+  hideCountdown();
+
   document.getElementById("message").textContent =
     "Close your eyes, make a little wish and hu aai jais tya and remember... " +
     "somewhere under this same sky, someone is wishing you happiness too. ✨❤️";
 }
 
-/* Countdown */
-
-let countdownTimer = null;
-let selectedDate = null;
+/* =====================================
+   ⏳ DAYS TO SEE YOU
+   ===================================== */
 
 const meetingDates = [
   ["January 11, 2027", "2027-01-11T00:00:00"],
@@ -51,7 +89,12 @@ const meetingDates = [
 
 function showCountdown() {
   const box = document.getElementById("countdown");
+  const message = document.getElementById("message");
 
+  // Hide previous message
+  message.style.display = "none";
+
+  // Show countdown
   box.hidden = false;
 
   if (countdownTimer !== null) {
@@ -63,22 +106,40 @@ function showCountdown() {
   countdownTimer = setInterval(updateCountdown, 1000);
 }
 
+/* Update all three countdowns */
+
 function updateCountdown() {
   const box = document.getElementById("countdown");
 
   let html = `
     <h2>Kyareeeeee Malissssss Goguuuuuu? 🥹❤️</h2>
     <p>Three possible dates, one beautiful moment 💗</p>
+
     <div class="date-options">
   `;
 
   meetingDates.forEach(([label, date], index) => {
     const difference = new Date(date).getTime() - Date.now();
 
-    const days = Math.max(0, Math.floor(difference / 86400000));
-    const hours = Math.max(0, Math.floor((difference / 3600000) % 24));
-    const minutes = Math.max(0, Math.floor((difference / 60000) % 60));
-    const seconds = Math.max(0, Math.floor((difference / 1000) % 60));
+    const days = Math.max(
+      0,
+      Math.floor(difference / 86400000)
+    );
+
+    const hours = Math.max(
+      0,
+      Math.floor((difference / 3600000) % 24)
+    );
+
+    const minutes = Math.max(
+      0,
+      Math.floor((difference / 60000) % 60)
+    );
+
+    const seconds = Math.max(
+      0,
+      Math.floor((difference / 1000) % 60)
+    );
 
     const isSelected = selectedDate === index;
 
@@ -90,12 +151,18 @@ function updateCountdown() {
         💕 ${label}
 
         <span class="date-timer">
-          ${difference <= 0
-            ? "It's finally time! ❤️"
-            : `${days}d : ${hours}h : ${minutes}m : ${seconds}s`}
+          ${
+            difference <= 0
+              ? "It's finally time! ❤️"
+              : `${days}d : ${hours}h : ${minutes}m : ${seconds}s`
+          }
         </span>
 
-        ${isSelected ? "<span>✨ Selected! ✨</span>" : ""}
+        ${
+          isSelected
+            ? "<span>✨ Selected! ✨</span>"
+            : ""
+        }
       </button>
     `;
   });
@@ -105,6 +172,8 @@ function updateCountdown() {
   box.innerHTML = html;
 }
 
+/* 💗 SELECT ANY DATE */
+
 function chooseDate(index) {
   selectedDate = index;
 
@@ -112,7 +181,9 @@ function chooseDate(index) {
   updateCountdown();
 }
 
-/* Magical sparkle celebration */
+/* =====================================
+   ✨ FULL-SCREEN SPARKLES
+   ===================================== */
 
 function launchSparkles() {
   const oldLayer = document.querySelector(".sparkle-layer");
@@ -121,12 +192,18 @@ function launchSparkles() {
     oldLayer.remove();
   }
 
+  if (sparkleTimeout !== null) {
+    clearTimeout(sparkleTimeout);
+  }
+
   const layer = document.createElement("div");
   layer.className = "sparkle-layer";
 
   document.body.appendChild(layer);
 
-  const particles = ["✨", "💗", "⭐", "💖", "🌸"];
+  const particles = [
+    "✨", "💗", "⭐", "💖", "🌸"
+  ];
 
   for (let i = 0; i < 150; i++) {
     const sparkle = document.createElement("span");
@@ -134,10 +211,15 @@ function launchSparkles() {
     sparkle.className = "sparkle-particle";
 
     sparkle.textContent =
-      particles[Math.floor(Math.random() * particles.length)];
+      particles[
+        Math.floor(Math.random() * particles.length)
+      ];
 
-    sparkle.style.left = Math.random() * 100 + "vw";
-    sparkle.style.top = Math.random() * 100 + "vh";
+    sparkle.style.left =
+      Math.random() * 100 + "vw";
+
+    sparkle.style.top =
+      Math.random() * 100 + "vh";
 
     sparkle.style.fontSize =
       (12 + Math.random() * 22) + "px";
@@ -151,7 +233,8 @@ function launchSparkles() {
     layer.appendChild(sparkle);
   }
 
-  setTimeout(() => {
+  sparkleTimeout = setTimeout(() => {
     layer.remove();
+    sparkleTimeout = null;
   }, 5000);
 }
