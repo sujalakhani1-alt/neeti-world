@@ -7,8 +7,8 @@
   <title>A Little World of Neetiii ❤️</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
+<body>
   <main class="container">
     <div class="moon">🌙</div>
 
@@ -27,22 +27,35 @@
       <button onclick="discoverReason()">❤️ Discover a reason</button>
       <button onclick="tapStar()">✨ Make a wish</button>
       <button onclick="showCountdown()">⏳ Days to See You</button>
-      <button onclick="toggleSong()">🎶 Song Dedicated to You</button>
+      <button onclick="showSongPlayer()">🎶 Song Dedicated to You</button>
     </section>
 
-    <!-- Countdown section -->
     <div id="countdown" class="countdown" hidden></div>
 
-    <!-- Surprise messages -->
+    <div id="songPlayer" class="song-player" hidden>
+      <div class="music-note">🎵</div>
+      <h2>A Little Melody For You 💗</h2>
+      <p>Goguuuu, aa song specially tara mate! 🥹❤️</p>
+
+      <div class="music-controls">
+        <button onclick="playSong()">▶ Play</button>
+        <button onclick="pauseSong()">⏸ Pause</button>
+      </div>
+
+      <p id="songStatus">Tap Play to listen 💕</p>
+    </div>
+
     <div id="message" class="message">
       Your little surprise will appear here. 💕
     </div>
 
     <p class="footer">Made with a little extra love ♡</p>
   </main>
-   <audio id="dedicatedSong" loop preload="none">
-  <source src="oursong.mp3" type="audio/mpeg">
-</audio>
+
+  <audio id="dedicatedSong" preload="none">
+    <source src="oursong.mp3" type="audio/mpeg">
+  </audio>
+
   <script src="script.js"></script>
 </body>
 </html>
