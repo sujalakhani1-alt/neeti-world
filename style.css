@@ -312,5 +312,10 @@ button {
     opacity: 0;
     transform: translateY(-180px) scale(0.3) rotate(360deg);
   }
+
+  /* Hide countdown when another button is clicked */
+.countdown[hidden] {
+    display: none !important;
+}
 }
 
