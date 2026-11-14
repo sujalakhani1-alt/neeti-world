@@ -1,0 +1,477 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Your Cute Little Album ♡</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Georgia, serif;
+  color: #914d72;
+  background: linear-gradient(
+    145deg,
+    #ffe5f0,
+    #f6cddd,
+    #fce9f3
+  );
+  overflow-x: hidden;
+}
+
+/* FLOATING HEARTS */
+
+.hearts {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.heart {
+  position: absolute;
+  bottom: -50px;
+  opacity: 0;
+  animation: floatHeart 12s linear infinite;
+}
+
+@keyframes floatHeart {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  15%, 85% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: translateY(-115vh) rotate(35deg);
+    opacity: 0;
+  }
+}
+
+/* MAIN PAGE */
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1050px;
+  margin: auto;
+  padding: 45px 18px 70px;
+  text-align: center;
+}
+
+h1 {
+  font-size: clamp(30px, 7vw, 48px);
+  font-weight: normal;
+  color: #a44879;
+  margin: 0 0 12px;
+}
+
+.decoration {
+  font-size: 23px;
+  margin-bottom: 35px;
+}
+
+/* ALBUM GRID */
+
+.album {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  padding: 20px 10px;
+}
+
+/* POLAROID FRAMES */
+
+.polaroid {
+  min-width: 0;
+  padding: 12px 12px 30px;
+  background: #fffdfb;
+  border: 0;
+  box-shadow: 0 12px 28px rgba(115,49,84,0.18);
+  cursor: pointer;
+  opacity: 0;
+  transform: rotate(var(--rotation));
+  animation: photoAppear 0.8s ease forwards;
+  animation-delay: var(--delay);
+  transition: translate 0.3s, box-shadow 0.3s;
+}
+
+.polaroid:hover {
+  translate: 0 -9px;
+  box-shadow: 0 20px 38px rgba(115,49,84,0.28);
+}
+
+.polaroid img,
+.polaroid video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: #f5dbe6;
+}
+
+.polaroid video {
+  pointer-events: none;
+}
+
+/* PHOTO ENTRANCE ANIMATION */
+
+@keyframes photoAppear {
+  from {
+    opacity: 0;
+    transform: translateY(55px)
+      rotate(0deg) scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0)
+      rotate(var(--rotation)) scale(1);
+  }
+}
+
+/* VIDEO PLAY SYMBOL */
+
+.video-frame {
+  position: relative;
+}
+
+.play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.55);
+  color: white;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 25px Arial, sans-serif;
+  pointer-events: none;
+}
+
+/* FULLSCREEN VIEWER */
+
+.viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(24,10,28,0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 65px 15px 30px;
+}
+
+.viewer[hidden] {
+  display: none !important;
+}
+
+.viewer img,
+.viewer video {
+  display: block;
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.viewer video {
+  width: min(100%, 850px);
+}
+
+.close-btn {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 50%;
+  background: #f7a5cc;
+  color: #39172d;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+/* BACK TO HOME */
+
+.back-btn {
+  display: inline-block;
+  margin-top: 35px;
+  padding: 14px 25px;
+  background: #fff9fc;
+  border: 1px solid #e4a4c2;
+  border-radius: 30px;
+  color: #914d72;
+  text-decoration: none;
+  box-shadow: 0 5px 15px rgba(115,49,84,0.1);
+}
+
+/* MOBILE DESIGN */
+
+@media (max-width: 700px) {
+  .album {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 19px;
+  }
+  .polaroid {
+    padding: 8px 8px 22px;
+  }
+}
+
+@media (max-width: 360px) {
+  .album {
+    gap: 12px;
+    padding: 10px 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heart {
+    display: none;
+    animation: none;
+  }
+  .polaroid {
+    opacity: 1;
+    animation: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="hearts" id="hearts"></div>
+
+<main class="container">
+
+  <h1>Your Cute Little Album ♡</h1>
+
+  <div class="decoration">🎀 💗 ✨ 💗 🎀</div>
+
+  <section class="album" id="album"></section>
+
+  <a href="index.html" class="back-btn">
+    ← Back to Neetiii's World 💗
+  </a>
+
+</main>
+
+<!-- PHOTO AND VIDEO VIEWER -->
+
+<div id="viewer" class="viewer" hidden
+     role="dialog" aria-modal="true"
+     aria-label="Photo and video viewer">
+
+  <button class="close-btn"
+          onclick="closeViewer()"
+          aria-label="Close viewer">
+    ×
+  </button>
+
+  <div id="viewerContent"></div>
+
+</div>
+
+<script>
+
+/* YOUR 7 PHOTOS + 5 VIDEOS */
+
+const memories = [
+  { type: "image", src: "image1.JPG" },
+  { type: "image", src: "image2.JPG" },
+  { type: "video", src: "video1.MOV" },
+  { type: "image", src: "image3.JPG" },
+  { type: "image", src: "image4.JPG" },
+  { type: "video", src: "video2.MOV" },
+  { type: "image", src: "image5.JPG" },
+  { type: "video", src: "video3.MOV" },
+  { type: "image", src: "image6.JPG" },
+  { type: "video", src: "video4.MOV" },
+  { type: "image", src: "image7.JPG" },
+  { type: "video", src: "video5.MOV" }
+];
+
+const album = document.getElementById("album");
+const viewer = document.getElementById("viewer");
+const viewerContent =
+  document.getElementById("viewerContent");
+
+let previousFocus = null;
+
+/* GENERATE POLAROID FRAMES */
+
+memories.forEach((memory, index) => {
+
+  const card = document.createElement("button");
+  card.type = "button";
+  card.className = "polaroid";
+
+  const rotations = [-5, 4, -3, 6, -4, 3];
+
+  card.style.setProperty(
+    "--rotation",
+    rotations[index % rotations.length] + "deg"
+  );
+
+  card.style.setProperty(
+    "--delay",
+    (index * 0.11) + "s"
+  );
+
+  card.setAttribute(
+    "aria-label",
+    `Open ${memory.type} ${index + 1}`
+  );
+
+  if (memory.type === "image") {
+
+    const img = document.createElement("img");
+    img.src = memory.src;
+    img.alt = "Memory " + (index + 1);
+    img.loading = "lazy";
+
+    card.appendChild(img);
+
+  } else {
+
+    const frame = document.createElement("div");
+    frame.className = "video-frame";
+
+    const video = document.createElement("video");
+    video.src = memory.src;
+    video.preload = "metadata";
+    video.muted = true;
+    video.playsInline = true;
+
+    const playIcon = document.createElement("div");
+    playIcon.className = "play-icon";
+    playIcon.textContent = "▶";
+
+    frame.appendChild(video);
+    frame.appendChild(playIcon);
+    card.appendChild(frame);
+
+  }
+
+  card.addEventListener(
+    "click",
+    () => openViewer(memory)
+  );
+
+  album.appendChild(card);
+
+});
+
+/* OPEN A MEMORY */
+
+function openViewer(memory) {
+
+  previousFocus = document.activeElement;
+
+  viewerContent.replaceChildren();
+
+  if (memory.type === "image") {
+
+    const img = document.createElement("img");
+    img.src = memory.src;
+    img.alt = "Enlarged memory";
+
+    viewerContent.appendChild(img);
+
+  } else {
+
+    const video = document.createElement("video");
+    video.src = memory.src;
+    video.controls = true;
+    video.playsInline = true;
+    video.preload = "metadata";
+
+    viewerContent.appendChild(video);
+
+  }
+
+  viewer.hidden = false;
+  document.body.style.overflow = "hidden";
+
+  viewer.querySelector(".close-btn").focus();
+}
+
+/* CLOSE THE VIEWER */
+
+function closeViewer() {
+
+  const video = viewerContent.querySelector("video");
+
+  if (video) {
+    video.pause();
+  }
+
+  viewerContent.replaceChildren();
+
+  viewer.hidden = true;
+  document.body.style.overflow = "";
+
+  if (previousFocus) {
+    previousFocus.focus();
+  }
+}
+
+viewer.addEventListener("click", function(event) {
+  if (event.target === viewer) {
+    closeViewer();
+  }
+});
+
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape" && !viewer.hidden) {
+    closeViewer();
+  }
+});
+
+/* CREATE FLOATING HEARTS */
+
+const heartsContainer =
+  document.getElementById("hearts");
+
+const symbols = ["💗", "💕", "♡", "✨"];
+
+for (let i = 0; i < 22; i++) {
+
+  const heart = document.createElement("span");
+
+  heart.className = "heart";
+
+  heart.textContent =
+    symbols[Math.floor(Math.random() * symbols.length)];
+
+  heart.style.left = Math.random() * 100 + "%";
+
+  heart.style.fontSize =
+    (14 + Math.random() * 17) + "px";
+
+  heart.style.animationDelay =
+    -(Math.random() * 12) + "s";
+
+  heart.style.animationDuration =
+    (9 + Math.random() * 8) + "s";
+
+  heartsContainer.appendChild(heart);
+}
+
+</script>
+
+</body>
+</html>
