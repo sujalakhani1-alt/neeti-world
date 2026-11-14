@@ -43,7 +43,7 @@ function showCountdown() {
             ["January 13, 2027", "2027-01-13T00:00:00"]
         ];
 
-        let html = "<h2>Until I See You Again 🥹❤️</h2>";
+        let html = "<h2>Kyareeeeee Malissssss Goguuuuuu? 🥹❤️</h2>";
         html += "<p>Three possible dates, one beautiful moment 💗</p>";
 
         dates.forEach(([label, date]) => {
