@@ -1,4 +1,12 @@
+function hideCountdown() {
+  const box = document.getElementById("countdown");
+  box.hidden = true;
 
+  if (countdownTimer !== null) {
+    clearInterval(countdownTimer);
+    countdownTimer = null;
+  }
+}
 function openLetter() {
   document.getElementById("message").innerHTML =
     "Dear Neetiii, 💌<br><br>" +
