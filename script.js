@@ -238,3 +238,14 @@ function launchSparkles() {
     sparkleTimeout = null;
   }, 5000);
 }
+function toggleSong() {
+  const song = document.getElementById("dedicatedSong");
+
+  if (song.paused) {
+    song.play().catch(() => {
+      alert("Couldn't play the song. Please try again.");
+    });
+  } else {
+    song.pause();
+  }
+}
